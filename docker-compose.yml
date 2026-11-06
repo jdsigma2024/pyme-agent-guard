@@ -1,0 +1,43 @@
+# Perfiles:
+#   docker compose up -d --build                      -> app en modo demo (sin modelo, narrador de plantillas)
+#   docker compose --profile llm up -d --build        -> app + Ollama (asistente y CrewAI con modelo local)
+#   docker compose exec ollama ollama pull llama3.2   -> descarga el modelo una vez
+#
+# Para CrewAI: PYME_NARRATOR=crewai en .env y construir con INSTALL_CREWAI=true.
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        INSTALL_CREWAI: ${INSTALL_CREWAI:-false}
+    image: pyme-agent-guard:0.3.0
+    env_file: .env
+    environment:
+      PYME_OLLAMA_BASE_URL: http://ollama:11434
+      PYME_CREWAI_BASE_URL: http://ollama:11434
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./brand:/app/brand:ro   # cambia logo y colores sin reconstruir la imagen
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    deploy:
+      resources:
+        limits: { cpus: "1.0", memory: 512M }
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["llm"]
+    volumes:
+      - ollama_data:/root/.ollama
+    # Sin puertos publicados: solo la app lo alcanza por la red interna de compose.
+    restart: unless-stopped
+
+volumes:
+  ollama_data:

@@ -1,0 +1,10 @@
+/* Marca: edita solo estos valores para cambiar los colores de toda la pantalla. */
+:root {
+  --brand-ink: #212121;      /* encabezado y textos */
+  --brand-primary: #15601d;  /* verde corporativo */
+  --brand-accent: #6dfd8c;   /* lima de acento */
+  --brand-mist: #ccffd6;     /* fondos suaves */
+  --brand-line: #dfe5df;
+  --brand-surface: #f5f8f5;
+  --brand-muted: #5d655d;
+}

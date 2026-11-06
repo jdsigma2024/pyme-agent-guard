@@ -1,0 +1,16 @@
+# Base Kubernetes del prototipo.  kubectl apply -k deploy/k8s
+# hpa.yaml queda fuera a propósito: el repositorio actual es en memoria (1 réplica).
+# Se activa en la Fase 2, cuando las solicitudes vivan en PostgreSQL (ver docs/ROADMAP.md).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: banca-pyme
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - networkpolicy.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: liquidez-factura
+    includeSelectors: false

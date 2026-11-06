@@ -1,0 +1,43 @@
+# CI: calidad, seguridad y evals como compuertas antes de construir la imagen.
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: pip install -r requirements-dev.txt ruff mypy
+      - name: Lint y tipos
+        run: |
+          ruff check src tests evals
+          mypy src
+      - name: Tests (incluye API y adaptador CrewAI con módulo falso)
+        run: pytest -q
+      - name: Evals de guardrails, journey e invariantes de gobierno (compuerta)
+        run: python evals/run_evals.py
+      - name: Auditoría de dependencias
+        run: pip-audit -r requirements.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: evals-report, path: evals/reports/ }
+
+  image:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir imagen
+        run: docker build -t pyme-agent-guard:${{ github.sha }} .
+      - name: Escanear imagen (Trivy)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: pyme-agent-guard:${{ github.sha }}
+          severity: CRITICAL,HIGH
+          exit-code: "1"

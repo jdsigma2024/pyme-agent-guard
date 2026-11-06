@@ -1,0 +1,15 @@
+.env
+.venv
+.git
+.github
+tests
+evals
+docs
+deploy
+entregables
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+.mypy_cache
+*.tar.gz

@@ -1,0 +1,27 @@
+[project]
+name = "pyme-agent-guard"
+version = "0.3.0"
+description = "Liquidez Factura: banca pyme agéntica con defensa en profundidad (arquitectura hexagonal + CrewAI opcional)"
+authors = [{ name = "Jose Sanchez" }]
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "UP", "I"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyme-agent-guard
+  labels: { app: pyme-agent-guard }
+spec:
+  replicas: 1  # repositorio en memoria; subir réplicas solo con PostgreSQL (Fase 2)
+  selector:
+    matchLabels: { app: pyme-agent-guard }
+  template:
+    metadata:
+      labels: { app: pyme-agent-guard }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: app
+          image: registry.example.com/banca-pyme/pyme-agent-guard:0.3.0  # fijar por digest en CD
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef: { name: pyme-agent-guard-config }
+            - secretRef: { name: pyme-agent-guard-secrets, optional: true }
+          resources:
+            requests: { cpu: 250m, memory: 256Mi }
+            limits: { cpu: "1", memory: 512Mi }
+          readinessProbe:
+            httpGet: { path: /health, port: 8000 }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir: {}

@@ -1,0 +1,9 @@
+{"nit": "900123456-8", "consent": [1, 1, 1], "status": "oferta_indicativa", "handoff": null}
+{"nit": "900555001", "consent": [1, 1, 1], "status": "revision_cumplimiento", "handoff": "oficial_cumplimiento"}
+{"nit": "900777002", "consent": [1, 1, 1], "status": "revision_fraude", "handoff": "analista_fraude"}
+{"nit": "900888003", "consent": [1, 1, 1], "status": "revision_manual", "handoff": "analista_credito"}
+{"nit": "900999004", "consent": [1, 1, 1], "status": "no_elegible", "handoff": null}
+{"nit": "901234567-7", "consent": [1, 1, 1], "status": "no_elegible", "handoff": null}
+{"nit": "900123456", "consent": [0, 1, 1], "status": "consentimiento_requerido", "handoff": null}
+{"nit": "900123456", "consent": [1, 0, 1], "status": "consentimiento_requerido", "handoff": null}
+{"nit": "900123456", "consent": [1, 1, 0], "status": "consentimiento_requerido", "handoff": null}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 40" role="img" aria-label="Logo">
+  <!-- LOGO DE EJEMPLO: reemplaza este archivo por el logo real (logo.svg o logo.png) -->
+  <circle cx="14" cy="20" r="9" fill="#6dfd8c"/>
+  <text x="34" y="27" font-family="system-ui, Segoe UI, Arial, sans-serif" font-size="22" font-weight="900" letter-spacing="2" fill="#ffffff" xml:space="preserve">PERIFERIA<tspan dx="10" font-size="13" font-weight="700" fill="#6dfd8c">IT GROUP</tspan></text>
+</svg>

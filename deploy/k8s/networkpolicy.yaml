@@ -1,0 +1,28 @@
+# Tráfico mínimo: entra solo desde el ingress/gateway; sale solo a DNS y al servicio de modelos.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pyme-agent-guard
+spec:
+  podSelector:
+    matchLabels: { app: pyme-agent-guard }
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: { kubernetes.io/metadata.name: ingress-nginx }
+      ports:
+        - { port: 8000, protocol: TCP }
+  egress:
+    - to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels: { k8s-app: kube-dns }
+      ports:
+        - { port: 53, protocol: UDP }
+        - { port: 53, protocol: TCP }
+    - to:
+        - podSelector:
+            matchLabels: { app: ollama }
+      ports:
+        - { port: 11434, protocol: TCP }

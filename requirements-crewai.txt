@@ -1,0 +1,4 @@
+# Dependencia opcional: narrador con equipo de agentes CrewAI (PYME_NARRATOR=crewai).
+# Versión estable vigente a la fecha de la prueba (serie 1.15). Fijar exacta y auditar con pip-audit
+# antes de producción; CrewAI trae muchas dependencias transitivas.
+crewai>=1.15,<2

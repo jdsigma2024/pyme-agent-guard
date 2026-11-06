@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pyme-agent-guard-config
+data:
+  PYME_LLM_PROVIDER: "ollama"
+  PYME_OLLAMA_BASE_URL: "http://ollama.banca-pyme.svc.cluster.local:11434"
+  PYME_OLLAMA_MODEL: "llama3.2"
+  PYME_NARRATOR: "plantilla"
+  PYME_CREWAI_MODEL: "ollama/llama3.2"
+  PYME_CREWAI_BASE_URL: "http://ollama.banca-pyme.svc.cluster.local:11434"
+  PYME_BRAND_NAME: "Periferia IT Group"
+  PYME_BRAND_TAGLINE: "Liquidez Factura · Banca Pyme"
